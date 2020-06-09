@@ -9,7 +9,8 @@ import { JwtStrategy } from './jwt.strategy';
 import * as config from 'config';
 
 const jwtConfig = config.get('jwt');
-
+// modules are defined logic from 3d party
+// service are defined business logic by us for consume .
 @Module({
   imports: [
     PassportModule.register({ defaultStrategy: 'jwt' }),
@@ -22,13 +23,7 @@ const jwtConfig = config.get('jwt');
     TypeOrmModule.forFeature([UserRepository]),
   ],
   controllers: [AuthController],
-  providers: [
-    AuthService,
-    JwtStrategy,
-  ],
-  exports: [
-    JwtStrategy,
-    PassportModule,
-  ],
+  providers: [AuthService, JwtStrategy],
+  exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}

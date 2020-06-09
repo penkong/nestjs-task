@@ -12,6 +12,7 @@ export class AuthService {
   constructor(
     @InjectRepository(UserRepository)
     private userRepository: UserRepository,
+    // jwt service come from auth module return of register JWTmodule
     private jwtService: JwtService,
   ) {}
 
@@ -19,16 +20,23 @@ export class AuthService {
     return this.userRepository.signUp(authCredentialsDto);
   }
 
-  async signIn(authCredentialsDto: AuthCredentialsDto): Promise<{ accessToken: string }> {
-    const username = await this.userRepository.validateUserPassword(authCredentialsDto);
+  async signIn(
+    authCredentialsDto: AuthCredentialsDto,
+  ): Promise<{ accessToken: string }> {
+    const username = await this.userRepository.validateUserPassword(
+      authCredentialsDto,
+    );
 
     if (!username) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
+    // also can add role of user here to use in front end
     const payload: JwtPayload = { username };
     const accessToken = await this.jwtService.sign(payload);
-    this.logger.debug(`Generated JWT Token with payload ${JSON.stringify(payload)}`);
+    this.logger.debug(
+      `Generated JWT Token with payload ${JSON.stringify(payload)}`,
+    );
 
     return { accessToken };
   }
