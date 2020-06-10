@@ -1,5 +1,5 @@
 import { Entity, PrimaryColumn, Column, ObjectIdColumn } from 'typeorm';
-
+// this is for type orm and mongodb
 @Entity()
 export class Lesson {
   @ObjectIdColumn()

@@ -8,7 +8,7 @@ import { Student } from './student.entity';
 @Injectable()
 export class StudentService {
   constructor(
-    @InjectRepository(Student) private studentRepository: Repository<Student>, 
+    @InjectRepository(Student) private studentRepository: Repository<Student>,
   ) {}
 
   async getStudent(id: string): Promise<Student> {
@@ -19,13 +19,15 @@ export class StudentService {
     return this.studentRepository.find();
   }
 
-  async createStudent(createStudentInput: CreateStudentInput): Promise<Student> {
+  async createStudent(
+    createStudentInput: CreateStudentInput,
+  ): Promise<Student> {
     const { firstName, lastName } = createStudentInput;
 
     const student = this.studentRepository.create({
       id: uuid(),
       firstName,
-      lastName
+      lastName,
     });
 
     return this.studentRepository.save(student);
@@ -36,8 +38,8 @@ export class StudentService {
       where: {
         id: {
           $in: studentIds,
-        }
-      }
+        },
+      },
     });
   }
 }

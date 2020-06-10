@@ -7,12 +7,10 @@ import { StudentModule } from 'src/student/student.module';
 
 @Module({
   imports: [
+    // these allow to inject the repository or our lesson
     TypeOrmModule.forFeature([Lesson]),
     StudentModule,
   ],
-  providers: [
-    LessonResolver,
-    LessonService
-  ]
+  providers: [LessonResolver, LessonService],
 })
 export class LessonModule {}
